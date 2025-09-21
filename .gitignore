@@ -1,0 +1,25 @@
+# Python compiled files
+*.pyc
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+
+# Database
+db.sqlite3
+
+# Environment variables
+*.env
+
+# Logs
+*.log
+
+# Django static files collected
+/staticfiles/
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

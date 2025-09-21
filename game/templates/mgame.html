@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="{% static 'css/game.css' %}">
+</head>
+
+<body>
+    <div class="game-container">
+        <h2>Select Difficulty</h2>
+        <button class="level-btn" data-level="easy">Easy</button>
+        <button class="level-btn" data-level="medium">Medium</button>
+        <button class="level-btn" data-level="hard">Hard</button>
+
+        <div class="game-box" style="display: none;">
+            <p>Guess the number!</p>
+            <input type="number" id="user-input">
+            <button id="enter-btn">Enter</button>
+            <button id="cancel-btn">Cancel</button>
+            <p class="attempts">Attempts: <span id="attempt-count">0</span></p>
+            <p>Guessed Number: <span id="blurred-number" class="blurred">###</span></p>
+            <p class="message"></p>
+            <button id="replay-btn" style="display: none;">🔄 Replay</button>
+        </div>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
+
+
+
+
