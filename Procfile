@@ -1,1 +1,1 @@
-web: gunicorn mathgame.wsgi
+web: gunicorn project2.wsgi
