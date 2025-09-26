@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mathgame.wsgi.application'
+WSGI_APPLICATION = 'project2.wsgi.application'
 
 
 # Database
