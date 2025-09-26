@@ -11,28 +11,78 @@
 
 <body>
     <div class="game-container">
+
+        {% if not active %}
+        {% if not status %}
+        <!-- 1️⃣ Difficulty Selection -->
         <h2>Select Difficulty</h2>
-        <button class="level-btn" data-level="easy">Easy</button>
-        <button class="level-btn" data-level="medium">Medium</button>
-        <button class="level-btn" data-level="hard">Hard</button>
+        <a href="{% url 'start_game' 'easy' %}"><button>Easy</button></a>
+        <a href="{% url 'start_game' 'medium' %}"><button>Medium </button></a>
+        <a href="{% url 'start_game' 'hard' %}"><button>Hard</button></a>
 
-        <div class="game-box" style="display: none;">
-            <p>Guess the number!</p>
-            <input type="number" id="user-input">
-            <button id="enter-btn">Enter</button>
-            <button id="cancel-btn">Cancel</button>
-            <p class="attempts">Attempts: <span id="attempt-count">0</span></p>
-            <p>Guessed Number: <span id="blurred-number" class="blurred">###</span></p>
-            <p class="message"></p>
-            <button id="replay-btn" style="display: none;">🔄 Replay</button>
+        <!-- Back to Home -->
+        <a href="{% url 'home' %}">
+            <button class="back-btn">⬅ Back</button>
+        </a>
+
+        {% else %}
+        <!-- 2️⃣ Replay / Result -->
+        <div class="game-box">
+            {% if status == "win" %}
+            <h2>🎉 Congratulations! You Win! 🎉</h2>
+            {% elif status == "lose" %}
+            <h2>😞 You Lose! Try Again 😞</h2>
+            {% endif %}
+            <p>{{ message }}</p>
+
+            <!-- Play Again -->
+            <a href="{% url 'replay_game' %}">
+                <button class="replay-btn">🔄 Play Again</button>
+            </a>
+
+            <!-- Back to Difficulty Selection -->
+            <a href="{% url 'mgame' %}">
+                <button class="back-btn">⬅ Back</button>
+            </a>
         </div>
-    </div>
+        {% endif %}
 
-    <script src="{% static 'js/script.js' %}"></script>
+        {% elif active %}
+        <!-- 3️⃣ Game Play -->
+        <div class="game-box">
+            <p>Guess the number!</p>
+            <form method="post" action="{% url 'guess_number' %}">
+                {% csrf_token %}
+                <input type="number" id="guessInput" name="guess" min="1" max="{{ max_number }}" required>
+                <button type="submit">Enter</button>
+                <button type="button" id="clearBtn">← Clear</button>
+            </form>
+
+            <p>Attempts left: {{ moves_left }}</p>
+            <p>Guessed Number:
+                <span class="blurred">{{ blurred_number|default:"?" }}</span>
+            </p>
+            <p>{{ message }}</p>
+
+            <!-- Back to Difficulty Selection -->
+            <a href="{% url 'mgame' %}">
+                <button class="back-btn">⬅ Back</button>
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+    <script>
+        const input = document.getElementById('guessInput');
+        const clearBtn = document.getElementById('clearBtn');
+
+        clearBtn.addEventListener('click', () => {
+            let val = input.value;
+            if (val.length > 0) {
+                input.value = val.slice(0, -1);  // removes last digit
+            }
+        });
+    </script>
 </body>
 
 </html>
-
-
-
-
